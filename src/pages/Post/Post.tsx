@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import bookImg from "../../assets/img books/image.png";
+import Img from "../../assets/img homes/depositphotos_8711123-stock-photo-luxury-stone-home-at-dusk.webp";
 import AddressPost from "./AddressPost/AddressPost";
 import Button from "components/Button";
 import Dialog from "components/Modal";
@@ -95,7 +95,7 @@ const Post: React.FC = () => {
                 </div>
               </div>
               <div className="w-1/6 h-auto ">
-                <img src={bookImg} alt={post.name} className="w-52 h-52 " />
+                <img src={Img} alt={post.name} className="w-52 h-52 " />
               </div>
             </div>
             <div className="w-full my-8">

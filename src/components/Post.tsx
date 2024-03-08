@@ -1,5 +1,5 @@
 import React from 'react';
-import bookImg from '../assets/img books/image.png';
+import Img from '../assets/img homes/depositphotos_8711123-stock-photo-luxury-stone-home-at-dusk.webp';
 
 interface PostProps {
   name: string;
@@ -15,7 +15,7 @@ const Post: React.FC<PostProps> = ({ name, creator, price }) => {
 
   return (
     <div className='flex flex-col mx-4 my-2 items-center justify-between'>
-      <img src={bookImg} alt="bookImg" className='w-36 h-36 rounded-3xl shadow-lg' />
+      <img src={Img} alt="bookImg" className='w-36 h-36 rounded-3xl shadow-lg' />
       <div className='flex flex-col'>
         <span>{name}</span>
         <span>ایجاد کننده: {truncateWriter(creator,1)}</span>
