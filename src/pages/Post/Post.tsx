@@ -76,7 +76,7 @@ const Post: React.FC = () => {
             <div className="flex flex-col items-center md:flex-row justify-between w-full">
               <div className="flex flex-col items-start w-2/3">
                 <h1>{post.name}</h1>
-                <p>قیمت کتاب: {post.price}</p>
+                <p>قیمت: {post.price}</p>
                 <div>
                   <p className="">{post.description}</p>
                   <p className="">آدرس کالا:{post.address}</p>
