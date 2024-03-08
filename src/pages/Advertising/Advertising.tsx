@@ -104,6 +104,7 @@ const Advertising = () => {
         setPhoneNumber("");
         setUserAddress("");
         setMapAddress("");
+        setPrice("");
         setMapClicked(false);
         setLocation({ lat: 35.6892, lng:51.3890 })
       } else {
