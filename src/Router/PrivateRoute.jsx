@@ -5,7 +5,7 @@ const PrivateRoute = () => {
   const userLoggedIn = localStorage.getItem("loginTime");
   
   if (!userLoggedIn) {
-    alert("لطفا فرم ورود را وارد کنید");
+    // alert("لطفا فرم ورود را وارد کنید");
     return <Navigate to="/Login" />;
   }
 
