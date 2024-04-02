@@ -104,14 +104,15 @@ const Login = () => {
       <div className="border-2 p-2 border-green-700 rounded-xl flex flex-col items-start space-y-3">
         <p className="mt-2">
           لطفا قبل از استفاده از پروژه این کد را در ترمینال خود وارد کنید :
-          json-server --watch db.json -p 8000 -m ./node_modules/json-server-auth
+          npm run start:server
+
         </p>
         <Button
           body="برای کپی کد بالا کلیک کنید"
           ClassName="bg-green-700 text-white"
           Click={() => {
             navigator.clipboard.writeText(
-              "json-server --watch db.json -p 8000 -m ./node_modules/json-server-auth"
+              "npm run start:server"
             );
             alert("کپی شد")
           }}
