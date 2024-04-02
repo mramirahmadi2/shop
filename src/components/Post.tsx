@@ -3,24 +3,29 @@ import Img from '../assets/img homes/depositphotos_8711123-stock-photo-luxury-st
 
 interface PostProps {
   name: string;
-  creator: string;
+  creator?: string; // Make creator optional
   price: string;
+  address?: string; // Make address optional
 }
 
-const Post: React.FC<PostProps> = ({ name, creator, price }) => {
-  const truncateWriter = (creator: string, maxLength: number): string => {
-    const words = creator.split(' ');
-    return words.length > maxLength ? `${words.slice(0, maxLength).join(' ')}...` : creator;
-  };
+const truncateText = (text: string | undefined, maxLength: number): string => {
+  if (!text) return ''; // Check if text is undefined or empty
+  const words = text.split(' ');
+  return words.length > maxLength ? `${words.slice(0, maxLength).join(' ')}...` : text;
+};
+
+const Post: React.FC<PostProps> = ({ name, creator, price, address }) => {
+  const truncatedCreator = truncateText(creator, 1);
+  const truncatedAddress = truncateText(address, 1);
 
   return (
     <div className='flex flex-col mx-4 my-2 items-center justify-between'>
-      <img src={Img} alt="bookImg" className='w-36 h-36 rounded-3xl shadow-lg' />
+      <img src={Img} alt="bookImg" className='w-40 h-40 rounded-3xl shadow-lg mb-4' />
       <div className='flex flex-col'>
         <span>{name}</span>
-        <span>ایجاد کننده: {truncateWriter(creator,1)}</span>
+        {creator && <span>ایجاد کننده: {truncatedCreator}</span>} {/* Render creator only if it exists */}
         <span>{price}تومان</span>
-        <p></p>
+        {address && <p>آدرس: {truncatedAddress}</p>} {/* Render address only if it exists */}
       </div>
     </div>
   );

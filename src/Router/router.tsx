@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation, Navigate, Outlet } from "react-router-dom";
 import Layout from "../layout/layout";
 import Home from "pages/Home/Home";
-import Post from "pages/Post/Post";
+import Post from "pages/Post/PostDetail";
 import Advertising from "pages/Advertising/Advertising";
 import Login from "pages/Login/Login";
 import Signup from "pages/Sinup/Sinup";

@@ -49,7 +49,7 @@ const Footer = () => {
         </div>
       </div>
       <div className=" w-full py-4 text-center text-16px ">
-        <span>سایت فروشگاهی با تمام لوازمی که نیاز شماست</span>
+        <span>اگر به دنبال خرید خانه هستید سایت ما انتخاب شماست</span>
       </div>
     </footer>
   );
