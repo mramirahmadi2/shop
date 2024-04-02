@@ -113,6 +113,7 @@ const Login = () => {
             navigator.clipboard.writeText(
               "json-server --watch db.json -p 8000 -m ./node_modules/json-server-auth"
             );
+            alert("کپی شد")
           }}
         />
       </div>
