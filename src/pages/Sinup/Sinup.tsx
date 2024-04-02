@@ -34,7 +34,7 @@ const Signup = () => {
             .then((data) => {
               console.log(data);
               alert('ثبت‌نام با موفقیت انجام شد.');
-              navigate('/');
+              navigate('/Login');
               resetForm();
             })
             .catch((error) => {
