@@ -6,7 +6,6 @@ import 'leaflet/dist/leaflet.css';
 
 const AddressPost = ({ address }: { address: string }) => {
   const [position, setPosition] = useState<[number, number] | null>(null);
- console.log(encodeURIComponent(address));
   useEffect(() => {
     // تبدیل آدرس به مختصات
     const geocodeAddress = async () => {

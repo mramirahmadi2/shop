@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import LeafMap from "./LeaftMap/LeafMap";
+import LeafMap from "components/LeafMap";
 import usePostRequest from "api/usePostRequest";
 import useNewProductId from "hook/NewProductId";
 import Button from "components/Button";
@@ -231,7 +231,7 @@ const Advertising = () => {
                   className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
                   htmlFor="inline-full-address"
                 >
-                  آدرس خانه خود را وارد کنید
+                  آدرس خانه را بر روی نقشه مشخص کنید
                 </label>
               </div>
               <div className="md:w-2/3">

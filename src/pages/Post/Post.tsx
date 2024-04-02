@@ -4,8 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import Img from "../../assets/img homes/depositphotos_8711123-stock-photo-luxury-stone-home-at-dusk.webp";
 import AddressPost from "./AddressPost/AddressPost";
 import Button from "components/Button";
-import Dialog from "components/Modal";
+import DialogDelete from "components/Modal";
+import DialogEdit from "components/ModalEdit";
 import useDeleteHook from "api/useDelete";
+
 interface MyData {
   id: string;
   name: string;
@@ -21,14 +23,19 @@ const Post: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [post, setPost] = useState<MyData | null>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [textModal, setTextModal] = useState<{typeModal:string; head: string; body: string }>({
-    typeModal:"",
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [textModal, setTextModal] = useState<{ typeModal: string; head: string; body: string }>({
+    typeModal: "",
     head: "",
     body: "",
   });
-  const {  deleteData } = useDeleteHook<{ message: string }>(`${url}/products/${params.id}`);
-  const  navigate = useNavigate();
+  const { deleteData } = useDeleteHook<{ message: string }>(`${url}/products/${params.id}`);
+  const navigate = useNavigate();
+
+  // استیت جدید برای نگهداری اطلاعات ویرایش شده
+  const [editedData, setEditedData] = useState<MyData | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,6 +43,7 @@ const Post: React.FC = () => {
           `${url}/products/${params.id}`
         );
         setPost(response.data);
+        setEditedData(response.data); // تنظیم اطلاعات اولیه برای ویرایش
       } catch (error) {
         setError("An error occurred");
       } finally {
@@ -45,36 +53,69 @@ const Post: React.FC = () => {
 
     fetchData();
   }, [params.id]);
+
   const handleDeleteModal = (productName: string) => {
-    setShowModal(true);
-    setTextModal({typeModal:"delete", head: `حدف محصول ${productName}`, body: `آیا از حذف محصول ${productName} مطمعن هستید؟` });
+    setShowModalDelete(true);
+    setTextModal({ typeModal: "delete", head: `حدف محصول ${productName}`, body: `آیا از حذف محصول ${productName} مطمعن هستید؟` });
   };
-  const deletePost = ()=>{
+
+  const deletePost = () => {
     deleteData();
     navigate("/")
-  }
+  };
+
   const handlEditModal = (productName: string) => {
-    setShowModal(true);
-    setTextModal({ typeModal: "edit" ,head: `ویرایش محصول ${productName}`, body: `این بخش هنوز کامل نیست` }); 
+    setShowModalEdit(true);
+    setTextModal({ typeModal: "edit", head: `ویرایش محصول ${productName}`, body: `فرم زیر را پر کنید` });
   };
+
+  const handleEdit = async (editedData: MyData) => {
+    try {
+      if (editedData) {
+        // ارسال درخواست به آدرس مربوط به ویرایش با استفاده از اطلاعات ویرایش شده
+        await axios.put(`${url}/products/${params.id}`, editedData);
+        // بروزرسانی استیت editedData پس از انجام ویرایش
+        setEditedData(editedData);
+        // بروزرسانی استیت post با استفاده از editedData
+        setPost(editedData);
+      }
+      // مخفی کردن مودال ویرایش
+      setShowModalEdit(false);
+    } catch (error) {
+      console.error("An error occurred while editing:", error);
+      // مدیریت خطا در صورت نیاز
+    }
+  };
+  
   const changeModal = () => {
-    showModal === true ? setShowModal(false) : setShowModal(true);
+    setShowModalDelete(prevState => !prevState);
   };
+
   return (
-    <div className="mx-8 ">
+    <div className="mx-auto min-w-[80vw]">
       <div>
         {loading && <div>...loading</div>}
         {error && <div>{error}</div>}
         {post && (
-          <div className="flex flex-col ">
-            <Dialog
-              ShowModal={showModal}
+          <div className="w-full">
+            <DialogDelete
+              ShowModal={showModalDelete}
               changeModal={changeModal}
               deletePost={deletePost}
               typeModal={textModal.typeModal} head={textModal.head} body={textModal.body}
             />
+            <DialogEdit
+              ShowModalEdit={showModalEdit}
+              changeModal={()=>setShowModalEdit(prevState => !prevState)}
+              typeModal={textModal.typeModal}
+              head={textModal.head}
+              body={textModal.body}
+              Edit={handleEdit}            
+              IdPost={post.id}
+              Url={url}
+            />
             <div className="flex flex-col items-center md:flex-row justify-between w-full">
-              <div className="flex flex-col items-start w-2/3">
+              <div className="flex flex-col items-start basis-4/6">
                 <h1>{post.name}</h1>
                 <p>قیمت: {post.price}</p>
                 <div>
@@ -84,17 +125,17 @@ const Post: React.FC = () => {
                 <div className="flex flex-row">
                   <Button
                     body="ویرایش اطلاعات"
-                    ClassName="bg-blue-700 text-white p-2 rounded-3xl"
+                    ClassName="bg-blue-700 text-white p-2 "
                     Click={() => handlEditModal(post.name)}
                   />
                   <Button
                     body="حذف اطللاعات"
-                    ClassName="bg-red-600 text-white p-2 rounded-3xl mr-5"
+                    ClassName="bg-red-600 text-white p-2  mr-5"
                     Click={() => handleDeleteModal(post.name)}
                   />
                 </div>
               </div>
-              <div className="w-1/6 h-auto ">
+              <div className="my-3 md:my-0 h-auto basis-1/6">
                 <img src={Img} alt={post.name} className="w-52 h-52 " />
               </div>
             </div>
